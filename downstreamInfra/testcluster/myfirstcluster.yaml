@@ -116,32 +116,32 @@ spec:
       controller:
         resources:
           requests:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 50m
+            memory: 128Mi
           limits:
             cpu: 200m
-            memory: 512Mi
+            memory: 256Mi
       applicationSet:
         resources:
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 50m
+            memory: 64Mi
           limits:
             cpu: 200m
             memory: 256Mi
       notifications:
         resources:
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 50m
+            memory: 64Mi
           limits:
             cpu: 200m
             memory: 256Mi
       server:
         resources:
           requests:
-            cpu: 50m
-            memory: 128Mi
+            cpu: 25m
+            memory: 64Mi
           limits:
             cpu: 200m
             memory: 256Mi
@@ -149,23 +149,7 @@ spec:
         copyutil:
           resources:
             requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              cpu: 200m
-              memory: 256Mi
-        resources:
-          requests:
-            cpu: 100m
-            memory: 256Mi
-          limits:
-            cpu: 200m
-            memory: 512Mi
-      dex:
-        initImage:
-          resources:
-            requests:
-              cpu: 50m
+              cpu: 25m
               memory: 64Mi
             limits:
               cpu: 200m
@@ -174,21 +158,37 @@ spec:
           requests:
             cpu: 50m
             memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+      dex:
+        initImage:
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+        resources:
+          requests:
+            cpu: 25m
+            memory: 64Mi
           limits:
             cpu: 200m
             memory: 256Mi
       redis:
         resources:
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 50m
+            memory: 64Mi
           limits:
             cpu: 200m
             memory: 256Mi
       redisSecretInit:
         resources:
           requests:
-            cpu: 50m
+            cpu: 25m
             memory: 64Mi
           limits:
             cpu: 200m
