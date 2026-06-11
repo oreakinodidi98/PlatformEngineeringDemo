@@ -17,7 +17,7 @@ metadata:
     meta.upbound.io/example-id: containerservice/v1beta1/kubernetesclusterextension
   labels:
     testing.upbound.io/example-name: rg-myfirst
-  name: test-clu1
+  name: test-clu1-se
 spec:
   forProvider:
     apiServerAccessProfile:
@@ -30,7 +30,7 @@ spec:
         maxCount: 5
         minCount: 1
         vmSize: Standard_D2_v2
-    dnsPrefix: exampleaks1
+    dnsPrefix: exampleaks1se
     identity:
       - type: SystemAssigned
     oidcIssuerEnabled: true
@@ -46,5 +46,5 @@ spec:
       Environment: Test
       Owner: Ore
   writeConnectionSecretToRef:
-    name: test-clu1-secret
+    name: test-clu1-se-secret
     namespace: crossplane-system
