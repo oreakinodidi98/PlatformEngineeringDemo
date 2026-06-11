@@ -17,12 +17,12 @@ metadata:
     meta.upbound.io/example-id: containerservice/v1beta1/kubernetesclusterextension
   labels:
     testing.upbound.io/example-name: rg-myfirst
-  name: test-clu1-se
+  name: test-clu1
 spec:
   forProvider:
     apiServerAccessProfile:
       - authorizedIpRanges:
-          - 192.168.1.0/24
+          - 82.9.176.134/24
     defaultNodePool:
       - name: default
         nodeCount: 1
@@ -46,7 +46,7 @@ spec:
       Environment: Test
       Owner: Ore
   writeConnectionSecretToRef:
-    name: test-clu1-se-secret
+    name: test-clu1-secret
     namespace: crossplane-system
 ---
 apiVersion: helm.crossplane.io/v1beta1
@@ -58,7 +58,7 @@ spec:
   credentials:
     source: Secret
     secretRef:
-      name: test-clu1-se-secret
+      name: test-clu1-secret
       namespace: crossplane-system
       key: kubeconfig
 ---
@@ -71,7 +71,7 @@ spec:
   credentials:
     source: Secret
     secretRef:
-      name: test-clu1-se-secret
+      name: test-clu1-secret
       namespace: crossplane-system
       key: kubeconfig
 ---
