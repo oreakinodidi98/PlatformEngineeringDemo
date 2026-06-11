@@ -37,7 +37,7 @@ spec:
     workloadIdentityEnabled: true
     keyVaultSecretsProvider:
       - secretRotationEnabled: true
-    location: West Europe
+    location: West US3
     azurePolicyEnabled: true
     resourceGroupNameSelector:
       matchLabels:
