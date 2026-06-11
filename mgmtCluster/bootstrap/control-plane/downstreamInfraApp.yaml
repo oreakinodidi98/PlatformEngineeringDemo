@@ -10,7 +10,7 @@ spec:
     source:    
         repoURL: https://github.com/oreakinodidi98/PlatformEngineeringDemo
         targetRevision: HEAD
-        path: downstreamInfra/         
+        path: downstreamInfra/testcluster/         
     syncPolicy:
         automated: {}
     destination:
