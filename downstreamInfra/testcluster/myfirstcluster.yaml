@@ -2,8 +2,49 @@ apiVersion: azure.upbound.io/v1beta1
 kind: ResourceGroup
 metadata:
   name: rg-myfirst
+  labels:
+    testing.upbound.io/example-name: rg-myfirst
 spec:
   forProvider:
     location: West US3
     tags:
       provisioner: crossplane      
+---
+apiVersion: containerservice.azure.upbound.io/v1beta1
+kind: KubernetesCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerservice/v1beta1/kubernetesclusterextension
+  labels:
+    testing.upbound.io/example-name: rg-myfirst
+  name: test-clu1
+spec:
+  forProvider:
+    apiServerAccessProfile:
+      - authorizedIpRanges:
+          - 192.168.1.0/24
+    defaultNodePool:
+      - name: default
+        nodeCount: 1
+        enableAutoScaling: true
+        maxCount: 5
+        minCount: 1
+        vmSize: Standard_D2_v2
+    dnsPrefix: exampleaks1
+    identity:
+      - type: SystemAssigned
+    oidcIssuerEnabled: true
+    workloadIdentityEnabled: true
+    keyVaultSecretsProvider:
+      - secretRotationEnabled: true
+    location: West Europe
+    azurePolicyEnabled: true
+    resourceGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: rg-myfirst
+    tags:
+      Environment: Test
+      Owner: Ore
+  writeConnectionSecretToRef:
+    name: test-clu1-secret
+    namespace: crossplane-system
