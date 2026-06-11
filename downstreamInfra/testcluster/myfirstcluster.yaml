@@ -52,7 +52,7 @@ spec:
 apiVersion: helm.crossplane.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: clu1-prov-name-helm
+  name: clu1-prov-helm
   namespace: crossplane-system
 spec:
   credentials:
@@ -65,7 +65,7 @@ spec:
 apiVersion: kubernetes.crossplane.io/v1alpha1
 kind: ProviderConfig
 metadata:
-  name: clu1-prov-name-k8s
+  name: clu1-prov-k8s
   namespace: crossplane-system
 spec:
   credentials:
@@ -89,7 +89,7 @@ spec:
       version:  9.5.20
     namespace: argocd   
   providerConfigRef: 
-    name: clu1-prov-name-helm
+    name: clu1-prov-helm
     namespace: crossplane-system
 ---
 apiVersion: kubernetes.crossplane.io/v1alpha2
@@ -118,5 +118,5 @@ spec:
             namespace: argocd
             server: https://kubernetes.default.svc
   providerConfigRef: 
-    name: clu1-prov-name-k8s
+    name: clu1-prov-k8s
     namespace: crossplane-system
