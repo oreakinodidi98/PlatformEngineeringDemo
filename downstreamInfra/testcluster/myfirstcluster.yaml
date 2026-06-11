@@ -6,7 +6,7 @@ metadata:
     testing.upbound.io/example-name: rg-myfirst
 spec:
   forProvider:
-    location: West US3
+    location: Sweden Central
     tags:
       provisioner: crossplane      
 ---
@@ -37,7 +37,7 @@ spec:
     workloadIdentityEnabled: true
     keyVaultSecretsProvider:
       - secretRotationEnabled: true
-    location: West US3
+    location: Sweden Central
     azurePolicyEnabled: true
     resourceGroupNameSelector:
       matchLabels:
