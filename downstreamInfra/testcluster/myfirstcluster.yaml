@@ -22,7 +22,7 @@ spec:
   forProvider:
     apiServerAccessProfile:
       - authorizedIpRanges:
-          - 82.9.176.134/24
+          - 82.9.176.134/32
     defaultNodePool:
       - name: default
         nodeCount: 1
