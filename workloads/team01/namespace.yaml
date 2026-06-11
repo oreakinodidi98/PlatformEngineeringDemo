@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: team01
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: team01-app-config
+  namespace: team01
+data:
+  APP_NAME: team01-sample
+  ENV: dev

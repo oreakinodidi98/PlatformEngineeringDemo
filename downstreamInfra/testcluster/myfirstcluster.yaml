@@ -48,3 +48,75 @@ spec:
   writeConnectionSecretToRef:
     name: test-clu1-se-secret
     namespace: crossplane-system
+---
+apiVersion: helm.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: clu1-prov-name-helm
+  namespace: crossplane-system
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: test-clu1-se-secret
+      namespace: crossplane-system
+      key: kubeconfig
+---
+apiVersion: kubernetes.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: clu1-prov-name-k8s
+  namespace: crossplane-system
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: test-clu1-se-secret
+      namespace: crossplane-system
+      key: kubeconfig
+---
+apiVersion: helm.crossplane.io/v1beta1
+kind: Release
+metadata:
+  annotations: 
+      crossplane.io/external-name: argocd   
+  name: clu1-argo  
+spec:
+  forProvider:
+    chart:
+      name: argo-cd
+      repository: https://argoproj.github.io/argo-helm
+      version:  9.5.20
+    namespace: argocd   
+  providerConfigRef: 
+    name: clu1-prov-name-helm
+    namespace: crossplane-system
+---
+apiVersion: kubernetes.crossplane.io/v1alpha2
+kind: Object
+metadata:
+  name: core-cluster-configs
+spec:
+  forProvider:
+    manifest:
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: core-cluster-configs
+        namespace: argocd
+        finalizers:
+        - resources-finalizer.argocd.argoproj.io
+      spec:
+        project: default
+        source:    
+          repoURL: "https://github.com/oreakinodidi98/PlatformEngineeringDemo" # Use your repo
+          targetRevision: HEAD
+          path: "workloads/team01"
+        syncPolicy:
+            automated: {}
+        destination:
+            namespace: argocd
+            server: https://kubernetes.default.svc
+  providerConfigRef: 
+    name: clu1-prov-name-k8s
+    namespace: crossplane-system
