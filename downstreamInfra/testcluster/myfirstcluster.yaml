@@ -23,6 +23,7 @@ spec:
     apiServerAccessProfile:
       - authorizedIpRanges:
           - 82.9.176.134/32
+          - 4.166.45.168/32
     defaultNodePool:
       - name: default
         nodeCount: 1
