@@ -1,0 +1,9 @@
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  name: rg-myfirst
+spec:
+  forProvider:
+    location: West US3
+    tags:
+      provisioner: crossplane      
