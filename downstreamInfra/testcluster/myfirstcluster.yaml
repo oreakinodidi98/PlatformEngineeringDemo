@@ -195,7 +195,6 @@ spec:
             memory: 128Mi
   providerConfigRef: 
     name: clu1-prov-helm
-    namespace: crossplane-system
 ---
 apiVersion: kubernetes.crossplane.io/v1alpha2
 kind: Object
@@ -226,4 +225,3 @@ spec:
             server: https://kubernetes.default.svc
   providerConfigRef: 
     name: clu1-prov-k8s
-    namespace: crossplane-system
