@@ -28,6 +28,9 @@ spec:
                   - pattern: '^EU$'
                   - pattern: '^US$'
             required:
+              - appname
+              - repourl
+              - repopath
               - location
 
     served: true

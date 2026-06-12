@@ -1,0 +1,9 @@
+namespace:
+  name: default
+
+serviceaccount:
+  clientId: ""
+
+scrprovclass:
+  keyVaultname: ""
+  tenantId: ""

@@ -7,4 +7,4 @@ spec:
   teamname: team01
   location: EU
   repourl: https://github.com/oreakinodidi98/PlatformEngineeringDemo
-  repopath: workloads/team01
+  repopath: workloads/team01/infra001

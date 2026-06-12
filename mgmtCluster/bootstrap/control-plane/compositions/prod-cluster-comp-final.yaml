@@ -3,6 +3,11 @@ kind: Composition
 metadata:
   name: base-stateful-app
 spec:
+  environment:
+    environmentConfigs:
+      - type: Reference
+        ref:
+          name: base-app-config-team01
   compositeTypeRef:
     apiVersion: compute.example.com/v1alpha1
     kind: base-stateful-app
@@ -96,16 +101,21 @@ spec:
                 toFieldPath: metadata.annotations["crossplane.io/external-name"]
                 policy:
                   fromFieldPath: Optional
+              - type: FromEnvironmentFieldPath
+                fromFieldPath: clustername
+                toFieldPath: metadata.annotations["crossplane.io/external-name"]
+                policy:
+                  fromFieldPath: Required
               - type: ToCompositeFieldPath
                 fromFieldPath: metadata.annotations["crossplane.io/external-name"]
                 toFieldPath: metadata.annotations["crossplane.io/clustername"]
                 policy:
                   fromFieldPath: Required
-              - type: FromCompositeFieldPath
-                fromFieldPath: "spec.clusterrgname"
+              - type: FromEnvironmentFieldPath
+                fromFieldPath: clusterrgname
                 toFieldPath: spec.forProvider.resourceGroupName
                 policy:
-                  fromFieldPath: Optional
+                  fromFieldPath: Required
 
           - name: crossplane-uai-fed
             base:
@@ -228,15 +238,15 @@ spec:
                   fromFieldPath: Required
 
               # UAI external-name should come from spec.kblaksuaiid (expected to be full UAI resource ID in your setup)
-              - type: FromCompositeFieldPath
-                fromFieldPath: spec.kblaksuaiid
+              - type: FromEnvironmentFieldPath
+                fromFieldPath: kblaksuaiid
                 toFieldPath: metadata.annotations["crossplane.io/external-name"]
                 policy:
                   fromFieldPath: Required
 
               # resourceGroupName must come from management cluster RG, not kblaksuaiid
-              - type: FromCompositeFieldPath
-                fromFieldPath: spec.mgmtclusterrg
+              - type: FromEnvironmentFieldPath
+                fromFieldPath: mgmtclusterrg
                 toFieldPath: spec.forProvider.resourceGroupName
                 policy:
                   fromFieldPath: Required
