@@ -1,0 +1,10 @@
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: EnvironmentConfig
+metadata:
+  name: base-app-config-team01
+  namespace: upbound-system
+data:
+  clustername: my56cluster
+  clusterrgname: my56app-dde0064afd2f
+  kblaksuaiid: kbl-identity-1598504785
+  mgmtclusterrg: rg-aks-pe-1598504785

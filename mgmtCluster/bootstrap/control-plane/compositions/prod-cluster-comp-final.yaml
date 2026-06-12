@@ -75,18 +75,18 @@ spec:
                   string:
                     fmt: "%s-uai"
                 toFieldPath: "spec.forProvider.name"
-
+# cluster information from previous step is needed for below resources, so using "Observe" management policy to only get the details without updating the resources
           - name: crossplane-get-cluster-details
             base:
               apiVersion: containerservice.azure.upbound.io/v1beta1
               kind: KubernetesCluster
               metadata:
                 annotations:
-                  crossplane.io/external-name: xxxx
+                  crossplane.io/external-name: my56cluster
               spec:
                 managementPolicies: ["Observe"]
                 forProvider:
-                  resourceGroupName: xxxx
+                  resourceGroupName: my56app-dde0064afd2f
             patches:
               - type: ToCompositeFieldPath
                 fromFieldPath: status.atProvider.oidcIssuerUrl
@@ -119,7 +119,7 @@ spec:
                   parentIdSelector:
                     matchControllerRef: true
                   location: Central US
-                  resourceGroupName: xxxx
+                  resourceGroupName: rg-aks-pe-1598504785
                   subject: system:serviceaccount:cp-app3:cp-app10
             patches:
               - type: CombineFromComposite
@@ -179,6 +179,34 @@ spec:
                 fromFieldPath: status.atProvider.id
                 toFieldPath: metadata.annotations["crossplane.io/kvResId"]
 
+          # - name: crossplane-get-operating-uai-prinID
+          #   base:
+          #     apiVersion: managedidentity.azure.upbound.io/v1beta1
+          #     kind: UserAssignedIdentity
+          #     metadata:
+          #       annotations:
+          #         crossplane.io/external-name: xxx
+          #     spec:
+          #       managementPolicies: ["Observe"]
+          #       forProvider:
+          #         resourceGroupName: rg-aks-pe-1598504785
+          #   patches:
+          #     - type: ToCompositeFieldPath
+          #       fromFieldPath: status.atProvider.principalId
+          #       toFieldPath: metadata.annotations["crossplane.io/principalId"]
+          #       policy:
+          #         fromFieldPath: Required
+          #     - type: FromCompositeFieldPath
+          #       fromFieldPath: "spec.kblaksuaiid"
+          #       toFieldPath: metadata.annotations["crossplane.io/external-name"]
+          #       policy:
+          #         fromFieldPath: Optional
+          #     - type: FromCompositeFieldPath
+          #       fromFieldPath: "spec.kblaksuaiid"
+          #       toFieldPath: spec.forProvider.resourceGroupName
+          #       policy:
+          #         fromFieldPath: Optional
+
           - name: crossplane-get-operating-uai-prinID
             base:
               apiVersion: managedidentity.azure.upbound.io/v1beta1
@@ -187,25 +215,31 @@ spec:
                 annotations:
                   crossplane.io/external-name: xxx
               spec:
-                managementPolicies: ["Observe"]
+                managementPolicies:
+                  - Observe
                 forProvider:
-                  resourceGroupName: xxx
+                  resourceGroupName: rg-aks-pe-1598504785
             patches:
+              # Read principalId from the observed UAI and publish it to the composite annotations
               - type: ToCompositeFieldPath
                 fromFieldPath: status.atProvider.principalId
                 toFieldPath: metadata.annotations["crossplane.io/principalId"]
                 policy:
                   fromFieldPath: Required
+
+              # UAI external-name should come from spec.kblaksuaiid (expected to be full UAI resource ID in your setup)
               - type: FromCompositeFieldPath
-                fromFieldPath: "spec.kblaksuaiid"
+                fromFieldPath: spec.kblaksuaiid
                 toFieldPath: metadata.annotations["crossplane.io/external-name"]
                 policy:
-                  fromFieldPath: Optional
+                  fromFieldPath: Required
+
+              # resourceGroupName must come from management cluster RG, not kblaksuaiid
               - type: FromCompositeFieldPath
-                fromFieldPath: "spec.kblaksuaiid"
+                fromFieldPath: spec.mgmtclusterrg
                 toFieldPath: spec.forProvider.resourceGroupName
                 policy:
-                  fromFieldPath: Optional
+                  fromFieldPath: Required
 
           - name: crossplane-role-assign-pri
             base:
